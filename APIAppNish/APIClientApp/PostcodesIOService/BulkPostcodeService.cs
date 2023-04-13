@@ -32,14 +32,39 @@ namespace APITestApp
         /// </summary>
         /// <param name="postcode"></param>
         /// <returns></returns>
-        public async Task MakeRequestAsync()
+        public async Task MakeRequestAsync(string[] postcodes)
         {
-            PostcodeResponse = await CallManager.MakeBulkRequestAsync();
+            PostcodeResponse = await CallManager.MakeBulkRequestAsync(postcodes);
             JsonResponse = JObject.Parse(PostcodeResponse);
             BulkPostcodeDTO.DeserializeResponse(PostcodeResponse);
         }
 
+        public int GetStatusCode()
+        {
+            return (int)CallManager.RestResponse.StatusCode;
+        }
+
+        public string? GetHeaderValue(string name)
+        {
+            return CallManager.RestResponse.Headers.Where(x => x.Name == name).Select(x => x.Value.ToString()).FirstOrDefault();
+        }
+
+        public string GetResponseContentType()
+        {
+            return CallManager.RestResponse.ContentType;
+        }
+
+        public int CodeCount()
+        {
+            var count = 0;
+
+            foreach (var code in JsonResponse["result"]["codes"])
+            {
+                count++;
+            }
+
+            return count;
+        }
+
     }
-
-
 }

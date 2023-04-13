@@ -11,9 +11,7 @@ namespace APIClientApp
         #region Properties
         public CallManager CallManager { get; set; }
         public JObject JsonResponse {get;set;}
-        
         public string PostcodeResponse { get; set; }
-
         public DTO<SinglePostcodeResponse> SinglePostcodeDTO { get; set; }
         #endregion
 

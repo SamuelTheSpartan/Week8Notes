@@ -31,14 +31,15 @@ namespace APIClientApp.PostcodesIOService.HTTPManager
 
         }
 
-        public async Task<string> MakeBulkRequestAsync()
+        public async Task<string> MakeBulkRequestAsync(string[] postcodeArray)
         {
             var request = new RestRequest();
+            request.Method = Method.Post;
             request.AddHeader("Content-Type", "application/json");
-
+            request.Resource = "postcodes/";
             var postcodes = new
             {
-                Postcodes = new string[] { "OX49 5NU", "M32 0JG", "NE30 1DP" }
+                Postcodes = postcodeArray
             };
 
             request.AddJsonBody(postcodes);
